@@ -13,41 +13,26 @@ def main(page: ft.Page):
         ft.ResponsiveRow(
             [
                 ft.Container(
-                    ft.Text("Column 1"),
+                    ft.TextField(label="YouTube URL"),
                     padding=5,
-                    bgcolor=ft.colors.YELLOW,
-                    col={"sm": 6, "md": 4, "xl": 2},
+                    col={"sm": 9, "md": 9, "xl": 9},
                 ),
                 ft.Container(
-                    ft.Text("Column 2"),
+                    ft.FilledButton("Descargar...", icon="add"),
                     padding=5,
-                    bgcolor=ft.colors.GREEN,
-                    col={"sm": 6, "md": 4, "xl": 2},
-                ),
-                ft.Container(
-                    ft.Text("Column 3"),
-                    padding=5,
-                    bgcolor=ft.colors.BLUE,
-                    col={"sm": 6, "md": 4, "xl": 2},
-                ),
-                ft.Container(
-                    ft.Text("Column 4"),
-                    padding=5,
-                    bgcolor=ft.colors.PINK_300,
-                    col={"sm": 6, "md": 4, "xl": 2},
+                    col={"sm": 3, "md": 3, "xl": 3},
                 ),
             ],
         ),
         ft.ResponsiveRow(
             [
                 ft.TextField(label="TextField 1", col={"md": 4}),
-                ft.TextField(label="TextField 2", col={"md": 4}),
-                ft.TextField(label="TextField 3", col={"md": 4}),
             ],
             run_spacing={"xs": 10},
         ),
     )
     page_resize(None)
+
 
 ft.app(target=main)
 
