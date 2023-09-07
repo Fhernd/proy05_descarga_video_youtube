@@ -1,15 +1,69 @@
-from pytube import YouTube
+import flet as ft
 
-# URL del video que deseas descargar
-video_url = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+def main(page: ft.Page):
+    def page_resize(e):
+        pw.value = f"{page.width} px"
+        pw.update()
 
-# Crear objeto YouTube
-yt = YouTube(video_url)
+    page.on_resize = page_resize
 
-# Obtener el stream de video de mayor resolución
-video_stream = yt.streams.get_highest_resolution()
+    pw = ft.Text(bottom=50, right=50, style="displaySmall")
+    page.overlay.append(pw)
+    page.add(
+        ft.ResponsiveRow(
+            [
+                ft.Container(
+                    ft.Text("Column 1"),
+                    padding=5,
+                    bgcolor=ft.colors.YELLOW,
+                    col={"sm": 6, "md": 4, "xl": 2},
+                ),
+                ft.Container(
+                    ft.Text("Column 2"),
+                    padding=5,
+                    bgcolor=ft.colors.GREEN,
+                    col={"sm": 6, "md": 4, "xl": 2},
+                ),
+                ft.Container(
+                    ft.Text("Column 3"),
+                    padding=5,
+                    bgcolor=ft.colors.BLUE,
+                    col={"sm": 6, "md": 4, "xl": 2},
+                ),
+                ft.Container(
+                    ft.Text("Column 4"),
+                    padding=5,
+                    bgcolor=ft.colors.PINK_300,
+                    col={"sm": 6, "md": 4, "xl": 2},
+                ),
+            ],
+        ),
+        ft.ResponsiveRow(
+            [
+                ft.TextField(label="TextField 1", col={"md": 4}),
+                ft.TextField(label="TextField 2", col={"md": 4}),
+                ft.TextField(label="TextField 3", col={"md": 4}),
+            ],
+            run_spacing={"xs": 10},
+        ),
+    )
+    page_resize(None)
 
-# Descargar el video en el directorio actual
-video_stream.download()
+ft.app(target=main)
 
-print(f"Video '{yt.title}' descargado exitosamente!")
+
+# from pytube import YouTube
+
+# # URL del video que deseas descargar
+# video_url = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+
+# # Crear objeto YouTube
+# yt = YouTube(video_url)
+
+# # Obtener el stream de video de mayor resolución
+# video_stream = yt.streams.get_highest_resolution()
+
+# # Descargar el video en el directorio actual
+# video_stream.download()
+
+# print(f"Video '{yt.title}' descargado exitosamente!")
