@@ -3,12 +3,14 @@ import flet as ft
 def main(page: ft.Page):
     def descargar(event):
         print("Descargando...")
+        
+    txt_url_id = ft.Ref[ft.TextField]()
     
     page.add(
         ft.ResponsiveRow(
             [
                 ft.Container(
-                    ft.TextField(label="YouTube URL/ID"),
+                    ft.TextField(label="YouTube URL/ID", ref=txt_url_id),
                     padding=5,
                     col={"sm": 9, "md": 9, "xl": 9},
                 ),
