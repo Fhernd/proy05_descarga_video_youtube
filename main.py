@@ -1,8 +1,15 @@
 import flet as ft
 
+
+def es_url(url: str) -> bool:
+    return url.startswith("https://") or url.startswith("http://")
+
+
 def main(page: ft.Page):
     def descargar(event):
-        print("Descargando...")
+        url_id = txt_url_id.current.value
+        
+        
         
     txt_url_id = ft.Ref[ft.TextField]()
     
