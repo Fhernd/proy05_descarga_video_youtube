@@ -1,8 +1,20 @@
+import re
+
 import flet as ft
 
 
 def es_url(url: str) -> bool:
-    return url.startswith("https://") or url.startswith("http://")
+    """
+    Verifica si la cadena de texto es una URL válida.
+    
+    Args:
+        url (str): Cadena de texto a verificar.
+        
+    Returns:
+        bool: True si es una URL válida, False en caso contrario.
+    """
+    regex = r'^(https?://)?(www\.)?(m\.)?(youtube\.com|youtu\.be)/(watch\?v=|embed/|v/|.+\?v=)?([^&=%\?]{11})'
+    return re.match(regex, url) is not None
 
 
 def main(page: ft.Page):
