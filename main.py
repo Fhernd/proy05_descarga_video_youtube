@@ -1,6 +1,9 @@
 import flet as ft
 
 def main(page: ft.Page):
+    def descargar(event):
+        print("Descargando...")
+    
     page.add(
         ft.ResponsiveRow(
             [
@@ -10,7 +13,7 @@ def main(page: ft.Page):
                     col={"sm": 9, "md": 9, "xl": 9},
                 ),
                 ft.Container(
-                    ft.FilledButton("Descargar...", icon="add"),
+                    ft.FilledButton("Descargar...", icon="add", on_click=descargar),
                     padding=5,
                     col={"sm": 3, "md": 3, "xl": 3},
                 ),
@@ -25,7 +28,6 @@ def main(page: ft.Page):
             ],
         ),
     )
-    page_resize(None)
 
 
 ft.app(target=main)
