@@ -3,7 +3,7 @@ import re
 import flet as ft
 
 
-def es_url(url: str) -> bool:
+def es_url_youtube(url: str) -> bool:
     """
     Verifica si la cadena de texto es una URL válida.
     
@@ -18,9 +18,28 @@ def es_url(url: str) -> bool:
 
 
 def main(page: ft.Page):
+    
+    def close_dlg(e):
+        dlg_modal.open = False
+        page.update()
+
+    dlg_modal = ft.AlertDialog(
+        modal=True,
+        title=ft.Text(""),
+        content=ft.Text(""),
+        actions=[
+            ft.TextButton("Ok", on_click=close_dlg)
+        ],
+        actions_alignment=ft.MainAxisAlignment.END,
+    )
+    
     def descargar(event):
         url_id = txt_url_id.current.value
         
+        if not es_url_youtube(url_id):
+            dlg_modal.title = ft.Text("Advertencia")
+            dlg_modal.content = ft.Text('La URL ingresada no es válida.')
+            return
         
         
     txt_url_id = ft.Ref[ft.TextField]()
