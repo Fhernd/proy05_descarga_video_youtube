@@ -1,19 +1,11 @@
 import flet as ft
 
 def main(page: ft.Page):
-    def page_resize(e):
-        pw.value = f"{page.width} px"
-        pw.update()
-
-    page.on_resize = page_resize
-
-    pw = ft.Text(bottom=50, right=50, style="displaySmall")
-    page.overlay.append(pw)
     page.add(
         ft.ResponsiveRow(
             [
                 ft.Container(
-                    ft.TextField(label="YouTube URL"),
+                    ft.TextField(label="YouTube URL/ID"),
                     padding=5,
                     col={"sm": 9, "md": 9, "xl": 9},
                 ),
