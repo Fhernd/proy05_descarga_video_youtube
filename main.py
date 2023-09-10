@@ -48,6 +48,23 @@ def es_url(url: str) -> bool:
     return re.match(regex, url) is not None
 
 
+def extract_video_id(url):
+    """
+    Extrae el ID del vídeo de YouTube a partir de la URL proporcionada.
+    
+    :param url: URL del vídeo de YouTube.
+    :return: ID del vídeo o None si la URL no es válida.
+    """
+    # Esta expresión regular cubre varios formatos de URL de YouTube.
+    pattern = (
+        r"(?:https?://)?(?:www\.)?"
+        r"(?:youtube\.com/watch\?v=|youtu\.be/|youtube\.com/embed/|youtube\.com/v/|www\.youtube\.com/v/)"
+        r"([^&\n?]+)"
+    )
+    match = re.match(pattern, url)
+    return match.group(1) if match else None
+
+
 def main(page: ft.Page):
     
     load_dotenv()
@@ -80,9 +97,11 @@ def main(page: ft.Page):
             return
         
         if es_url(url_id):
-            url_id = url_id.split("=")[-1]
+            video_id = extract_video_id(url_id)
+        else:
+            video_id = url_id
         
-        if not existe_video(url_id, youtube_api_key):
+        if not existe_video(video_id, youtube_api_key):
             dlg_modal.title = ft.Text("Advertencia")
             dlg_modal.content = ft.Text('El video no existe.')
             
