@@ -20,7 +20,7 @@ def es_url_youtube(url: str) -> bool:
     return re.match(regex, url) is not None
 
 
-def video_exists(video_id, api_key):
+def existe_video(video_id, api_key):
     # Construye la URL de la API
     url = f"https://www.googleapis.com/youtube/v3/videos?id={video_id}&key={api_key}&part=id"
     
@@ -32,6 +32,20 @@ def video_exists(video_id, api_key):
     if not data.get('items'):
         return False
     return True
+
+
+def es_url(url: str) -> bool:
+    """
+    Verifica si la cadena de texto es una URL válida.
+    
+    Args:
+        url (str): Cadena de texto a verificar.
+        
+    Returns:
+        bool: True si es una URL válida, False en caso contrario.
+    """
+    regex = r'^(https?://)?(www\.)?'
+    return re.match(regex, url) is not None
 
 
 def main(page: ft.Page):
@@ -65,7 +79,17 @@ def main(page: ft.Page):
             page.update()
             return
         
+        if es_url(url_id):
+            url_id = url_id.split("=")[-1]
         
+        if not existe_video(url_id, youtube_api_key):
+            dlg_modal.title = ft.Text("Advertencia")
+            dlg_modal.content = ft.Text('El video no existe.')
+            
+            page.dialog = dlg_modal
+            dlg_modal.open = True
+            page.update()
+            return
         
     txt_url_id = ft.Ref[ft.TextField]()
     
