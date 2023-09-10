@@ -17,6 +17,20 @@ def es_url_youtube(url: str) -> bool:
     return re.match(regex, url) is not None
 
 
+def video_exists(video_id, api_key):
+    # Construye la URL de la API
+    url = f"https://www.googleapis.com/youtube/v3/videos?id={video_id}&key={api_key}&part=id"
+    
+    # Hace la solicitud a la API
+    response = requests.get(url)
+    data = response.json()
+    
+    # Si 'items' en la respuesta es una lista vacía, el video no existe
+    if not data.get('items'):
+        return False
+    return True
+
+
 def main(page: ft.Page):
     
     def close_dlg(e):
@@ -36,7 +50,7 @@ def main(page: ft.Page):
     def descargar(event):
         url_id = txt_url_id.current.value
         
-        if not es_url_youtube(url_id):
+        if not es_url_youtube(url_id) and not es_url_youtube(f"https://www.youtube.com/watch?v={url_id}"):
             dlg_modal.title = ft.Text("Advertencia")
             dlg_modal.content = ft.Text('La URL ingresada no es válida. Debe ser una URL de YouTube.')
             
@@ -44,6 +58,7 @@ def main(page: ft.Page):
             dlg_modal.open = True
             page.update()
             return
+        
         
         
     txt_url_id = ft.Ref[ft.TextField]()
@@ -80,7 +95,7 @@ ft.app(target=main)
 # from pytube import YouTube
 
 # # URL del video que deseas descargar
-# video_url = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+# video_url = 'https://www.youtube.com/watch?v=dQw4w9WgXCq'
 
 # # Crear objeto YouTube
 # yt = YouTube(video_url)
