@@ -1,6 +1,9 @@
+import os
 import re
 
+from dotenv import load_dotenv
 import flet as ft
+import requests
 
 
 def es_url_youtube(url: str) -> bool:
@@ -32,6 +35,9 @@ def video_exists(video_id, api_key):
 
 
 def main(page: ft.Page):
+    
+    load_dotenv()
+    youtube_api_key = os.getenv("API_KEY")
     
     def close_dlg(e):
         dlg_modal.open = False
@@ -89,7 +95,8 @@ def main(page: ft.Page):
     )
 
 
-ft.app(target=main)
+if __name__ == "__main__":
+    ft.app(target=main)
 
 
 # from pytube import YouTube
