@@ -38,7 +38,11 @@ def main(page: ft.Page):
         
         if not es_url_youtube(url_id):
             dlg_modal.title = ft.Text("Advertencia")
-            dlg_modal.content = ft.Text('La URL ingresada no es válida.')
+            dlg_modal.content = ft.Text('La URL ingresada no es válida. Debe ser una URL de YouTube.')
+            
+            page.dialog = dlg_modal
+            dlg_modal.open = True
+            page.update()
             return
         
         
