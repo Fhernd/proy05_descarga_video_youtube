@@ -21,14 +21,21 @@ def es_url_youtube(url: str) -> bool:
 
 
 def existe_video(video_id, api_key):
-    # Construye la URL de la API
+    """
+    Verifica si el vídeo existe.
+    
+    Args:
+        video_id (str): ID del vídeo.
+        api_key (str): API Key de YouTube.
+    
+    Returns:
+        bool: True si el vídeo existe, False en caso contrario.
+    """
     url = f"https://www.googleapis.com/youtube/v3/videos?id={video_id}&key={api_key}&part=id"
     
-    # Hace la solicitud a la API
     response = requests.get(url)
     data = response.json()
     
-    # Si 'items' en la respuesta es una lista vacía, el video no existe
     if not data.get('items'):
         return False
     return True
