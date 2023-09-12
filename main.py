@@ -55,7 +55,7 @@ def es_url(url: str) -> bool:
     return re.match(regex, url) is not None
 
 
-def extract_video_id(url):
+def extraer_id_video(url):
     """
     Extrae el ID del vídeo de YouTube a partir de la URL proporcionada.
     
@@ -73,7 +73,12 @@ def extract_video_id(url):
 
 
 def main(page: ft.Page):
+    """
+    Función principal de la aplicación.
     
+    Args:
+        page (ft.Page): Página de la aplicación.
+    """
     load_dotenv()
     youtube_api_key = os.getenv("API_KEY")
     
@@ -104,7 +109,7 @@ def main(page: ft.Page):
             return
         
         if es_url(url_id):
-            video_id = extract_video_id(url_id)
+            video_id = extraer_id_video(url_id)
         else:
             video_id = url_id
         
