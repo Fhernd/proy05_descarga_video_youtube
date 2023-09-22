@@ -3,6 +3,7 @@ import re
 
 from dotenv import load_dotenv
 import flet as ft
+from pytube import YouTube
 import requests
 
 
@@ -72,6 +73,28 @@ def extraer_id_video(url):
     return match.group(1) if match else None
 
 
+def descargar_video(video_id):
+    """
+    Descarga el vídeo de YouTube.
+    
+    :param video_id: ID del vídeo de YouTube.
+    """
+
+    # URL del video que deseas descargar
+    video_url = 'https://www.youtube.com/watch?v=dQw4w9WgXCq'
+
+    # Crear objeto YouTube
+    yt = YouTube(video_url)
+
+    # Obtener el stream de video de mayor resolución
+    video_stream = yt.streams.get_highest_resolution()
+
+    # Descargar el video en el directorio actual
+    video_stream.download()
+
+    print(f"Video '{yt.title}' descargado exitosamente!")
+
+
 def main(page: ft.Page):
     """
     Función principal de la aplicación.
@@ -122,6 +145,9 @@ def main(page: ft.Page):
             page.update()
             return
         
+        descargar_video(video_id)
+        
+        
     txt_url_id = ft.Ref[ft.TextField]()
     
     page.add(
@@ -152,20 +178,3 @@ def main(page: ft.Page):
 
 if __name__ == "__main__":
     ft.app(target=main)
-
-
-# from pytube import YouTube
-
-# # URL del video que deseas descargar
-# video_url = 'https://www.youtube.com/watch?v=dQw4w9WgXCq'
-
-# # Crear objeto YouTube
-# yt = YouTube(video_url)
-
-# # Obtener el stream de video de mayor resolución
-# video_stream = yt.streams.get_highest_resolution()
-
-# # Descargar el video en el directorio actual
-# video_stream.download()
-
-# print(f"Video '{yt.title}' descargado exitosamente!")
