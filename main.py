@@ -121,11 +121,16 @@ def main(page: ft.Page):
     
     def save_file_result(e: ft.FilePickerResultEvent):
         ruta = e.path if e.path else "Cancelled!"
-        print(ruta)
+        
+        if ruta == "Cancelled!":
+            return
+        
+        descargar(ruta)
     
     dlg_guardar_archivo = ft.FilePicker(on_result=save_file_result)
+    page.overlay.extend([dlg_guardar_archivo])
     
-    def descargar(event):
+    def descargar(ruta):
         url_id = txt_url_id.current.value
         
         if not es_url_youtube(url_id) and not es_url_youtube(f"https://www.youtube.com/watch?v={url_id}"):
@@ -151,10 +156,6 @@ def main(page: ft.Page):
             page.update()
             return
         
-        dlg_guardar_archivo.save_file()
-        # descargar_video(video_id)
-        
-        
     txt_url_id = ft.Ref[ft.TextField]()
     
     page.add(
@@ -166,7 +167,7 @@ def main(page: ft.Page):
                     col={"sm": 9, "md": 9, "xl": 9},
                 ),
                 ft.Container(
-                    ft.FilledButton("Descargar...", icon="add", on_click=descargar),
+                    ft.FilledButton("Descargar...", icon="add", on_click=lambda _: dlg_guardar_archivo.save_file()),
                     padding=5,
                     col={"sm": 3, "md": 3, "xl": 3},
                 ),
@@ -181,8 +182,6 @@ def main(page: ft.Page):
             ],
         ),
     )
-    
-    page.overlay.extend([dlg_guardar_archivo])
 
 
 if __name__ == "__main__":
