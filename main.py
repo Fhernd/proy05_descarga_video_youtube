@@ -73,7 +73,7 @@ def extraer_id_video(url):
     return match.group(1) if match else None
 
 
-def descargar_video(video_id):
+def descargar_video(video_id, ruta):
     """
     Descarga el vídeo de YouTube.
     
@@ -155,6 +155,8 @@ def main(page: ft.Page):
             dlg_modal.open = True
             page.update()
             return
+        
+        descargar_video(video_id, ruta)
         
     txt_url_id = ft.Ref[ft.TextField]()
     
