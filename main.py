@@ -119,6 +119,12 @@ def main(page: ft.Page):
         actions_alignment=ft.MainAxisAlignment.END,
     )
     
+    def save_file_result(e: ft.FilePickerResultEvent):
+        ruta = e.path if e.path else "Cancelled!"
+        print(ruta)
+    
+    dlg_guardar_archivo = ft.FilePicker(on_result=save_file_result)
+    
     def descargar(event):
         url_id = txt_url_id.current.value
         
@@ -145,7 +151,8 @@ def main(page: ft.Page):
             page.update()
             return
         
-        descargar_video(video_id)
+        dlg_guardar_archivo.save_file()
+        # descargar_video(video_id)
         
         
     txt_url_id = ft.Ref[ft.TextField]()
@@ -174,6 +181,8 @@ def main(page: ft.Page):
             ],
         ),
     )
+    
+    page.overlay.extend([dlg_guardar_archivo])
 
 
 if __name__ == "__main__":
